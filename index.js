@@ -5,31 +5,40 @@ function Rotation(opt)
 };
 
 //Prototype to get the key to encode/decode the string
-Rotation.prototype.getKey = function()
+Rotation.prototype.getKey = function(opt)
 {
 	return opt.key;
 };
 
 //Function to encode the string.
 //The numbers of char codes i use is from 32 ('Space') to 125 ('}')
-Rotation.prototype.encode = function(str)
+Rotation.prototype.encode = function(str,key)
 {
 	var i=0;
-	var encodedStr;
+	var encodedStr='';
 	var strTmp, intTmp;
 	for(;i<str.length;i++)
 	{
-		//	-> If the char code of the char we read, plus the key number that the user gives,
-		//	is greater than the 125, the alphabet retrieves to initial state (32), and sums
-		//	the difference between them.
-		if(opt.getKey+str.charCodeAt(i)>125)
+		
+		if( str.charCodeAt(i) >= 32 && str.charCodeAt(i) <= 125 )
 		{
-			intTmp=opt.getKey+str.charCodeAt(i)-125;
-			strTmp=charCodeAt(32+intTmp);
-		}else
+			
+			//	-> If the char code of the char we read, plus the key number that the user gives,
+			//	is greater than the 125, the alphabet retrieves to initial state (32), and sums
+			//	the difference between them.
+			if(key+str.charCodeAt(i)>125)
+			{
+				intTmp=key+str.charCodeAt(i)-125;
+				strTmp=String.fromCharCode(32+intTmp);
+			}else
+			{
+				strTmp=String.fromCharCode(key+str.charCodeAt(i));
+			}
+		} else
 		{
-			strTmp=charCodeAt(opt.getKey+str.charCodeAt(i));
+			strTmp = str[i];
 		}
+
 		encodedStr+=strTmp;
 	}
 	
@@ -38,8 +47,39 @@ Rotation.prototype.encode = function(str)
 
 //Function to decode the string.
 //The numbers of char codes i use is from 32 ('Space') to 125 ('}')
-Rotation.prototype.decode = function(str)
-{
+Rotation.prototype.decode = function(str,key)
+{	
+	var i=0;
+	var decodedStr='';
+	var strTmp, intTmp;
+	for(;i<str.length;i++)
+	{
+		
+		if( str.charCodeAt(i) >= 32 && str.charCodeAt(i) <= 125 )
+		{
+			
+			//	-> If the char code of the char we read, minus the key number that the user gives,
+			//	is smaller than 32, the alphabet retrieves to final state (125), and subtracts
+			//	the difference between them.
+			if(str.charCodeAt(i)-key<32)
+			{	
+				intTmp=32-(str.charCodeAt(i)-key);
+				strTmp=String.fromCharCode(125-intTmp);
+			}else
+			{
+				strTmp=String.fromCharCode(str.charCodeAt(i)-key);
+			}
+		} else
+		{
+			strTmp = str[i];
+		}
+
+		decodedStr+=strTmp;
+	}
 	
+	return decodedStr;
 };
+
+
+module.exports=Rotation;
 
