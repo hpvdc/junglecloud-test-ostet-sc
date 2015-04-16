@@ -5,14 +5,14 @@ function Rotation(opt)
 };
 
 //Prototype to get the key to encode/decode the string
-Rotation.prototype.getKey = function(opt)
+Rotation.prototype.getKey = function()
 {
-	return opt.key;
+	return this.opt.key;
 };
 
 //Function to encode the string.
 //The numbers of char codes i use is from 32 ('Space') to 125 ('}')
-Rotation.prototype.encode = function(str,key)
+Rotation.prototype.encode = function(str)
 {
 	var i=0;
 	var encodedStr='';
@@ -26,13 +26,13 @@ Rotation.prototype.encode = function(str,key)
 			//	-> If the char code of the char we read, plus the key number that the user gives,
 			//	is greater than the 125, the alphabet retrieves to initial state (32), and sums
 			//	the difference between them.
-			if(key+str.charCodeAt(i)>125)
+			if(this.opt.key+str.charCodeAt(i)>125)
 			{
-				intTmp=key+str.charCodeAt(i)-125;
+				intTmp=this.opt.key+str.charCodeAt(i)-125;
 				strTmp=String.fromCharCode(32+intTmp);
 			}else
 			{
-				strTmp=String.fromCharCode(key+str.charCodeAt(i));
+				strTmp=String.fromCharCode(this.opt.key+str.charCodeAt(i));
 			}
 		} else
 		{
@@ -47,7 +47,7 @@ Rotation.prototype.encode = function(str,key)
 
 //Function to decode the string.
 //The numbers of char codes i use is from 32 ('Space') to 125 ('}')
-Rotation.prototype.decode = function(str,key)
+Rotation.prototype.decode = function(str)
 {	
 	var i=0;
 	var decodedStr='';
@@ -61,13 +61,13 @@ Rotation.prototype.decode = function(str,key)
 			//	-> If the char code of the char we read, minus the key number that the user gives,
 			//	is smaller than 32, the alphabet retrieves to final state (125), and subtracts
 			//	the difference between them.
-			if(str.charCodeAt(i)-key<32)
+			if(str.charCodeAt(i)-this.opt.key<32)
 			{	
-				intTmp=32-(str.charCodeAt(i)-key);
+				intTmp=32-(str.charCodeAt(i)-this.opt.key);
 				strTmp=String.fromCharCode(125-intTmp);
 			}else
 			{
-				strTmp=String.fromCharCode(str.charCodeAt(i)-key);
+				strTmp=String.fromCharCode(str.charCodeAt(i)-this.opt.key);
 			}
 		} else
 		{
