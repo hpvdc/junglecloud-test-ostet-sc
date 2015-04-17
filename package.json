@@ -1,0 +1,26 @@
+{
+  "name": "hpvdc-junglecloud-test-ostet-sc",
+  "version": "0.0.2",
+  "description": "#",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^2.2.4"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hpvdc/junglecloud-test-ostet-sc.git"
+  },
+  "author": "Hugo Passo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hpvdc/junglecloud-test-ostet-sc/issues"
+  },
+  "homepage": "https://github.com/hpvdc/junglecloud-test-ostet-sc"
+}
